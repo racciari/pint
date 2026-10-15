@@ -10,6 +10,7 @@ This check is used to estimate how many times given alert would fire.
 It will run `expr` query from every alert rule against selected Prometheus
 servers and report how many unique alerts it would generate.
 If `for` and/or `keep_firing_for` are set on alerts they will be used to adjust results.
+With `keep_firing_for`, results returned again before it runs out are counted as the same alert.
 
 ## Configuration
 

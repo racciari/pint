@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.89.3
+
+### Fixed
+
+- `alerts/count` check no longer adds `keep_firing_for` to `for`, which undercounted
+  alerts using it, often down to 0. Results returned again within `keep_firing_for`
+  now continue the same alert instead of starting a new one.
+
 ## v0.89.2
 
 ### Fixed

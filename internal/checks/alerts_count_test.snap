@@ -118,14 +118,14 @@
   output: |
     4 |   expr: up{job="foo"} == 0
                 ^^^^^^^^^^^^^^^^^^
-                `prom` Prometheus server at https://simple.example.com would trigger 1 alert(s) in the last
+                `prom` Prometheus server at https://simple.example.com would trigger 2 alert(s) in the last
                 1d.
   problem:
     reporter: alerts/count
     summary: alert count estimate
     details: To get a preview of the alerts that would fire please [click here](https://simple.example.com/graph?g0.expr=up%7Bjob%3D%22foo%22%7D+%3D%3D+0&g0.tab=0&g0.range_input=1d).
     diagnostics:
-        - message: '`prom` Prometheus server at https://simple.example.com would trigger 1 alert(s) in the last 1d.'
+        - message: '`prom` Prometheus server at https://simple.example.com would trigger 2 alert(s) in the last 1d.'
           firstcolumn: 1
           lastcolumn: 18
           kind: 0
@@ -152,6 +152,34 @@
   content: |
     - alert: Foo Is Down
       keep_firing_for: 10m
+      expr: up{job="foo"} == 0
+  output: |
+    3 |   expr: up{job="foo"} == 0
+                ^^^^^^^^^^^^^^^^^^
+                `prom` Prometheus server at https://simple.example.com would trigger 6 alert(s) in the last
+                1d.
+  problem:
+    reporter: alerts/count
+    summary: alert count estimate
+    details: To get a preview of the alerts that would fire please [click here](https://simple.example.com/graph?g0.expr=up%7Bjob%3D%22foo%22%7D+%3D%3D+0&g0.tab=0&g0.range_input=1d).
+    diagnostics:
+        - message: '`prom` Prometheus server at https://simple.example.com would trigger 6 alert(s) in the last 1d.'
+          firstcolumn: 1
+          lastcolumn: 18
+          kind: 0
+    lines:
+        first: 3
+        last: 3
+    severity: 0
+    anchor: 0
+
+---
+
+[TestAlertsCountCheck/keep_firing_for:_30m_merges_bursts - 1]
+- description: 'keep_firing_for: 30m merges bursts'
+  content: |
+    - alert: Foo Is Down
+      keep_firing_for: 30m
       expr: up{job="foo"} == 0
   output: |
     3 |   expr: up{job="foo"} == 0
@@ -399,6 +427,63 @@
     lines:
         first: 3
         last: 3
+    severity: 0
+    anchor: 0
+
+---
+
+[TestAlertsCountCheck/keep_firing_for:_2m_boundary - 1]
+- description: 'keep_firing_for: 2m boundary'
+  content: |
+    - alert: Foo Is Down
+      keep_firing_for: 2m
+      expr: up{job="foo"} == 0
+  output: |
+    3 |   expr: up{job="foo"} == 0
+                ^^^^^^^^^^^^^^^^^^
+                `prom` Prometheus server at https://simple.example.com would trigger 3 alert(s) in the last
+                1d.
+  problem:
+    reporter: alerts/count
+    summary: alert count estimate
+    details: To get a preview of the alerts that would fire please [click here](https://simple.example.com/graph?g0.expr=up%7Bjob%3D%22foo%22%7D+%3D%3D+0&g0.tab=0&g0.range_input=1d).
+    diagnostics:
+        - message: '`prom` Prometheus server at https://simple.example.com would trigger 3 alert(s) in the last 1d.'
+          firstcolumn: 1
+          lastcolumn: 18
+          kind: 0
+    lines:
+        first: 3
+        last: 3
+    severity: 0
+    anchor: 0
+
+---
+
+[TestAlertsCountCheck/for:_10m_+_keep_firing_for:_30m_continues_with_short_ranges - 1]
+- description: 'for: 10m + keep_firing_for: 30m continues with short ranges'
+  content: |
+    - alert: Foo Is Down
+      for: 10m
+      keep_firing_for: 30m
+      expr: up{job="foo"} == 0
+  output: |
+    4 |   expr: up{job="foo"} == 0
+                ^^^^^^^^^^^^^^^^^^
+                `prom` Prometheus server at https://simple.example.com would trigger 2 alert(s) in the last
+                1d.
+  problem:
+    reporter: alerts/count
+    summary: alert count estimate
+    details: To get a preview of the alerts that would fire please [click here](https://simple.example.com/graph?g0.expr=up%7Bjob%3D%22foo%22%7D+%3D%3D+0&g0.tab=0&g0.range_input=1d).
+    diagnostics:
+        - message: '`prom` Prometheus server at https://simple.example.com would trigger 2 alert(s) in the last 1d.'
+          firstcolumn: 1
+          lastcolumn: 18
+          kind: 0
+    lines:
+        first: 4
+        last: 4
     severity: 0
     anchor: 0
 
